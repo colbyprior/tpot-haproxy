@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    dev:
+      vars:
+        honeypot_address: 127.0.0.1
+      hosts:
+        localhost:
+          ssh: True
+    prod:
+      vars:
+        honeypot_address: 127.0.0.1
+      hosts:
