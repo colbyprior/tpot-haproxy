@@ -4,10 +4,20 @@ all:
     dev:
       vars:
         honeypot_address: 127.0.0.1
+        lazy_tls: True
+        ssh: False
+        smtp: True
+        http: True
+        https: True
       hosts:
         localhost:
           ssh: True
     prod:
       vars:
         honeypot_address: 127.0.0.1
+        lazy_tls: True
+        ssh: False
+        smtp: False
+        http: False
+        https: False
       hosts:

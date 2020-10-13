@@ -25,13 +25,42 @@ defaults
         timeout server  50000
 
 {% if ssh %}
-frontend ssh
+frontend ft_ssh
     bind *:2002
     mode tcp
-    default_backend ssh
+    default_backend bk_ssh
     timeout client 1h
 
-backend ssh
+backend bk_ssh
     mode tcp
-    server localhost {{ honeypot_address }}
+    server ssh {{ honeypot_address }}
 {% endif %}
+
+{% if smtp %}
+frontend ft_smtp
+  bind *:25
+  mode tcp
+  default_backend bk_postfix
+
+backend bk_postfix
+  mode tcp
+  server smtp {{ honeypot_address }}:25 send-proxy
+{% endif %}
+
+{% if http %}
+frontend ft_http
+  bind *:80
+  mode http
+  default_backend bk_http
+{% endif %}
+
+{% if https %}
+frontend ft_https
+  bind *:443 ssl crt /etc/ssl/private/honeypot_combined.pem
+  mode http
+  default_backend bk_http
+{% endif %}
+
+backend bk_http
+  mode http
+  server http {{ honeypot_address }}:80

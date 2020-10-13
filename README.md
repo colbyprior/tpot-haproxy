@@ -11,3 +11,6 @@ This is an Ansible playbook to deploy a HAProxy config to create a lightweight h
 
 # List of available listeners
 - ssh
+- smtp
+- http
+- https

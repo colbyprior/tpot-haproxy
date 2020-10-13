@@ -1,8 +1,6 @@
 ---
 - name: Setup HAProxy for honeypot
   hosts: all
-  module_defaults:
-    ssh: False
 
   tasks:
   # TODO: support for apt/yum
@@ -10,6 +8,14 @@
     apt:
       name: haproxy
       state: latest
+
+  - name: Generate a Self Signed OpenSSL certificate
+    shell: 'openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj "/C=AU/ST=Some-State/L=Somewhere/O=Something/CN=example.com" -keyout /etc/ssl/private/honeypot.key -out /etc/ssl/certs/honeypot.crt'
+    when: lazy_tls
+
+  - name: Combine TLS cert into pem
+    shell: 'cat /etc/ssl/private/honeypot.key /etc/ssl/certs/honeypot.crt > /etc/ssl/private/honeypot_combined.pem'
+    when: lazy_tls
 
   - name: Add HAProxy config file
     template:
