@@ -5,19 +5,49 @@ all:
       vars:
         honeypot_address: 127.0.0.1
         lazy_tls: True
+        ftp: True
         ssh: False
         smtp: True
+        hnsp: True
         http: True
+        pop: True
+        rpc: True
+        netbios: True
         https: True
+        smb: True
+        mssql: True
+        mysql: True
+        rdp: True
+        webcenter: True
+        radmin: True
+        kibana: True
+        rfb: True
+        http_alt: True
+        games: True
       hosts:
         localhost:
           ssh: True
     prod:
       vars:
         honeypot_address: 127.0.0.1
-        lazy_tls: True
+        lazy_tls: False
+        ftp: False
         ssh: False
         smtp: False
+        hnsp: False
         http: False
+        pop: False
+        rpc: False
+        netbios: False
         https: False
+        smb: False
+        mssql: False
+        mysql: False
+        rdp: False
+        webcenter: False
+        radmin: False
+        kibana: False
+        rfb: False
+        http_alt: False
+        games: False
       hosts:

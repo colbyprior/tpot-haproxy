@@ -24,16 +24,28 @@ defaults
         timeout client  50000
         timeout server  50000
 
+{% if ftp %}
+frontend ft_ftp
+    bind *:21
+    mode tcp
+    default_backend bk_ftp
+
+backend bk_ftp
+    mode tcp
+    server ftp {{ honeypot_address }}:21
+{% endif %}
+
+
 {% if ssh %}
 frontend ft_ssh
-    bind *:2002
+    bind *:22
     mode tcp
     default_backend bk_ssh
     timeout client 1h
 
 backend bk_ssh
     mode tcp
-    server ssh {{ honeypot_address }}
+    server ssh {{ honeypot_address }}:22
 {% endif %}
 
 {% if smtp %}
